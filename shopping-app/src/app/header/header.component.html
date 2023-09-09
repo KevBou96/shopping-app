@@ -5,15 +5,17 @@
         </div>
         <div class="navbar-default">
             <ul class="nav navbar-nav">
-                <li routerLinkActive="active"><a routerLink="/recipes">Recipes</a></li>
+                <li *ngIf="user" routerLinkActive="active"><a routerLink="/recipes">Recipes</a></li>
+                <li *ngIf="!user" routerLinkActive="active"><a routerLink="/auth">Log In</a></li>
+                <li *ngIf="user" routerLinkActive="active"><a routerLink="/auth">Log Out</a></li>
                 <li routerLinkActive="active"><a routerLink="/shopping-list">Shopping List</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <ul *ngIf="user" class="nav navbar-nav navbar-right">
                 <li class="dropdown" appDropdown>
                     <a style="cursor: pointer"class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a style="cursor: pointer">Save Data</a></li>
-                        <li><a style="cursor: pointer">Fetch Data</a></li>
+                        <li><a style="cursor: pointer" (click)="saveData()">Save Data</a></li>
+                        <li><a style="cursor: pointer" (click)="fetchData()">Fetch Data</a></li>
                     </ul>
                 </li>
             </ul>

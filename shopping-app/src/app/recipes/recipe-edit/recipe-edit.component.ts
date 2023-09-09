@@ -14,7 +14,7 @@ import { ShoppingListService } from 'src/app/shopping-list/shopping-list.service
 export class RecipeEditComponent implements OnInit {
   id: number;
   editMode = false;
-  recipeForm: FormGroup;
+  recipeForm: FormGroup = null;
 
 
   constructor(private router: Router,
