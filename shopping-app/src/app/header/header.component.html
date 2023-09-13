@@ -7,7 +7,7 @@
             <ul class="nav navbar-nav">
                 <li *ngIf="user" routerLinkActive="active"><a routerLink="/recipes">Recipes</a></li>
                 <li *ngIf="!user" routerLinkActive="active"><a routerLink="/auth">Log In</a></li>
-                <li *ngIf="user" routerLinkActive="active"><a routerLink="/auth">Log Out</a></li>
+                <li *ngIf="user" routerLinkActive="active"><a routerLink="/auth" (click)="logOut()">Log Out</a></li>
                 <li routerLinkActive="active"><a routerLink="/shopping-list">Shopping List</a></li>
             </ul>
             <ul *ngIf="user" class="nav navbar-nav navbar-right">
