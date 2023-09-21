@@ -2,6 +2,7 @@
     <div class="col-xs-12 col-md-6 col-md-offset-3">
         <!-- <div class="alert alert-danger error-message" *ngIf="error">{{ error }}</div> -->
         <app-alert *ngIf="error" [message]="error" (close)="onHandleError()"></app-alert>
+        <div class="login-title">Login</div>
         <form *ngIf="!isLoading" [formGroup]="authForm" (ngSubmit)="Authenticate()">
             <div class="form-group">
                 <label for="email">Email</label>
@@ -14,9 +15,11 @@
                 <span *ngIf="authForm.get('password').invalid && authForm.get('password').touched" class="help-block">Password is required</span>
             </div>
             <div class="div">
-                <button type="submit" class="btn btn-primary" [disabled]="!authForm.valid">{{ logged ? 'Login' : 'Sign Up' }}</button>
-                |
-                <button type="button" class="btn btn-primary" (click)="switchedMode()">Switch to {{ !logged ? 'Sign Up' : 'Login' }}</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!authForm.valid">Login</button>
+                /
+                <a (click)="signUp()">Don't have an account?</a>
+                /
+                <a (click)="forgotPassword()">Forgot password?</a>
             </div>
         </form>
         <div class="spinner">

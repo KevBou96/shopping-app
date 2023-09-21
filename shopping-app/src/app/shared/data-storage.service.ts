@@ -4,9 +4,12 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Recipe } from "../recipes/recipe.model";
 import { exhaustMap, map, take, tap } from "rxjs/operators";
 import { AuthService } from "../auth/auth.service";
+import { User } from "../auth/user.model";
 
 @Injectable({providedIn: "root"})
 export class DataStorageService {
+    user: User = null;
+
     constructor(
         private http: HttpClient,
         private recipeService: RecipeService,
@@ -33,6 +36,6 @@ export class DataStorageService {
             })
         }), tap(recipes => {
             this.recipeService.setRecipes(recipes)
-        }))  
+        }))
     }
 }

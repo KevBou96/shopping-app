@@ -4,6 +4,7 @@ import { BehaviorSubject, Subject, catchError, tap, throwError } from "rxjs";
 import { User } from "./user.model";
 import { Router } from "@angular/router";
 import { environment } from "src/environments/environment.development"; 
+import { response } from "express";
 
 interface AuthResponseData {
     idToken: string,
@@ -102,7 +103,7 @@ export class AuthService {
 
     logOut() {
         this.user.next(null);
-        this.router.navigate(['/auth'])
+        this.router.navigate(['/login'])
         localStorage.removeItem('userData')
         if (this.tokenExpirationTimer) {
             clearTimeout(this.tokenExpirationTimer)
@@ -114,5 +115,21 @@ export class AuthService {
         this.tokenExpirationTimer = setTimeout(() => {
             this.logOut()
         }, expirationDuration);
+    }
+
+    getUser() {
+        this.user.subscribe(user => {
+            const newUser = user
+            return newUser
+        })
+       
+    }
+
+    resetPassword(email: string) {
+        return this.http.post<string>('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=' + environment.fireBaseApiKey,
+        {
+            requestType: "PASSWORD_RESET",
+            email: email 
+        })
     }
 }

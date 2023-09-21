@@ -12,7 +12,6 @@ import { User } from "./user.model";
     styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-    logged = true;
     authForm: FormGroup;
     isLoading = false;
     error: string = null;
@@ -20,9 +19,7 @@ export class AuthComponent implements OnInit {
 
     constructor(private auth: AuthService, private router: Router) {}
 
-    switchedMode() {
-        this.logged = !this.logged;
-    }
+  
 
     ngOnInit(): void {
         this.authForm = new FormGroup({
@@ -35,27 +32,26 @@ export class AuthComponent implements OnInit {
         this.isLoading = true;
         let email: string = this.authForm.value.email;
         let password: string = this.authForm.value.password;
-        if (this.logged) {
-            this.auth.signin(email, password)
+        this.auth.signin(email, password)
             .subscribe(responseData => {
-                this.isLoading = false;
-                this.router.navigate(['recipes'])
+                this.router.navigate(['recipes']).then(() =>
+                    this.isLoading = false)
                 console.log(responseData)
             }, (catchError) => {
                 this.isLoading = false;
                 this.error = catchError
             })
-        } else {
-            this.auth.signup(email, password)
-        .subscribe(responseData => {
-            this.isLoading = false;
-            this.router.navigate(['/recipes'])
-            console.log(responseData)
-        }, (catchError) => {
-            this.isLoading = false;
-            this.error = catchError
-        })
-        }
+        // else {
+        //     this.auth.signup(email, password)
+        // .subscribe(responseData => {
+        //     this.isLoading = false;
+        //     this.router.navigate(['/recipes'])
+        //     console.log(responseData)
+        // }, (catchError) => {
+        //     this.isLoading = false;
+        //     this.error = catchError
+        // })
+        // }
         this.authForm.reset()
     }
 
@@ -63,4 +59,11 @@ export class AuthComponent implements OnInit {
         this.error = null;
     }
 
+    signUp() {
+        this.router.navigate(['signup'])
+    }
+
+    forgotPassword() {
+        this.router.navigate(['/login/forgot-password'])
+    }
 }

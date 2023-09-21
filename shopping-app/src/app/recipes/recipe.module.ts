@@ -15,7 +15,7 @@ import { SharedModule } from "../shared/shared.module";
 
 const routes: Routes = [
     { path: '', component: RecipesComponent, canActivate: [AuthGuard] , children: [
-        { path: '', component: RecipeEditComponent},
+        { path: '', component: RecipeEditComponent, resolve: [recipesResolverService]},
         { path: 'new', component: RecipeEditComponent },
         { path: ':id/:name', component: RecipeDetailComponent, resolve: [recipesResolverService]},
         { path: ':id/:name/edit', component: RecipeEditComponent, resolve: [recipesResolverService]}
