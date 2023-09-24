@@ -34,24 +34,17 @@ export class AuthComponent implements OnInit {
         let password: string = this.authForm.value.password;
         this.auth.signin(email, password)
             .subscribe(responseData => {
-                this.router.navigate(['recipes']).then(() =>
+                if (responseData.users[0].emailVerified) {
+                    this.router.navigate(['recipes']).then(() =>
                     this.isLoading = false)
-                console.log(responseData)
+                } else {
+                    this.isLoading = false
+                    this.error = "Please verify your email address"
+                }
             }, (catchError) => {
                 this.isLoading = false;
                 this.error = catchError
             })
-        // else {
-        //     this.auth.signup(email, password)
-        // .subscribe(responseData => {
-        //     this.isLoading = false;
-        //     this.router.navigate(['/recipes'])
-        //     console.log(responseData)
-        // }, (catchError) => {
-        //     this.isLoading = false;
-        //     this.error = catchError
-        // })
-        // }
         this.authForm.reset()
     }
 

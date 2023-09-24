@@ -9,8 +9,8 @@
                 <li routerLinkActive="active"><a routerLink="/shopping-list">Shopping List</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li *ngIf="!user" routerLinkActive="active"><a routerLink="/login">Log In</a></li>
-                <li *ngIf="!user" routerLinkActive="active"><a routerLink="/signup">Sign up</a></li>
+                <li *ngIf="!user" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/login">Log In</a></li>
+                <li *ngIf="!user" routerLinkActive="active"><a routerLink="/login/signup">Sign up</a></li>
             </ul>
             <ul *ngIf="user" class="nav navbar-nav navbar-right">
                 <li *ngIf="user" routerLinkActive="active"><a routerLink="/login" (click)="logOut()">Log Out</a></li>

@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Subject, catchError, tap, throwError } from "rxjs";
+import { BehaviorSubject, Subject, catchError, switchMap, tap, throwError } from "rxjs";
 import { User } from "./user.model";
 import { Router } from "@angular/router";
 import { environment } from "src/environments/environment.development"; 
@@ -36,20 +36,22 @@ export class AuthService {
                 errorMessage = 'Email already exists!';
             } 
             return throwError(errorMessage);
-        }), tap(responseData => {
-            this.handleAuth(responseData.email, responseData.localId, responseData.idToken, +responseData.expiresIn)
         })
         )
     }
 
     signin(email: string, password: string) {
+        let authData: AuthResponseData = null;
         return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.fireBaseApiKey
         , {
             email: email, 
             password: password, 
             returnSecureToken: true 
-        }
-        ).pipe(catchError(errorResponse => {
+        })
+        .pipe(switchMap((signInData) => {
+            authData = signInData;
+            return this.getUserData(signInData.idToken)
+        }) ,catchError(errorResponse => {
             console.log(errorResponse);
             let errorMessage = 'An unknown error ocurred!'
             if (errorResponse.error.error.message === "INVALID_PASSWORD") {
@@ -60,7 +62,11 @@ export class AuthService {
             }
             return throwError(errorMessage);
         }), tap(responseData => {
-            this.handleAuth(responseData.email, responseData.localId, responseData.idToken, +responseData.expiresIn);
+            if (responseData.users[0].emailVerified) {
+                this.handleAuth(authData.email, authData.localId, authData.idToken, +authData.expiresIn);
+            } else {
+                return 
+            }
         }))
     }
 
@@ -130,6 +136,21 @@ export class AuthService {
         {
             requestType: "PASSWORD_RESET",
             email: email 
+        })
+    }
+
+    sendEmailVerification(idToken: string) {
+        return this.http.post<string>("https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=" + environment.fireBaseApiKey,
+        {
+            requestType: "VERIFY_EMAIL",
+            idToken: idToken
+        })
+    }
+
+    getUserData(idToken: string) {
+        return this.http.post<any>('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=' + environment.fireBaseApiKey,
+        {
+            idToken: idToken
         })
     }
 }

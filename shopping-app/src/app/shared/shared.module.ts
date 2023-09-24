@@ -3,6 +3,7 @@ import { AlertComponent } from "./alert.component";
 import { LoadingSpinner } from "./loading-spinner.component";
 import { DropdownDirective } from "./dropdown.directive";
 import { CommonModule } from "@angular/common";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { CommonModule } from "@angular/common";
         DropdownDirective,
     ],
     imports: [
-        CommonModule
+        CommonModule,
+        ReactiveFormsModule
     ],
     exports: [
         AlertComponent,

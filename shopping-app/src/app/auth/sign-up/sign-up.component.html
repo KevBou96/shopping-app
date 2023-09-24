@@ -1,1 +1,46 @@
-<p>sign-up works!</p>
+<div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+        <app-alert *ngIf="error" [message]="error" (close)="onHandleError()"></app-alert>
+        <div class="signup-title">Create account</div>
+        <form *ngIf="!isLoading" [formGroup]="signupForm" (ngSubmit)="signUpUser()">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="name">Name</label>
+                        <input formControlName="name" type="text" id="name" class="form-control">
+                        <span *ngIf="signupForm.get('name').invalid && signupForm.get('name').touched" class="text-danger">Name is required</span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="name">Last Name</label>
+                        <input formControlName="lastname" type="text" id="lastname" class="form-control">
+                        <span *ngIf="signupForm.get('lastname').invalid && signupForm.get('lastname').touched" class="text-danger">Last Name is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input formControlName="email" type="email" id="email" class="form-control">
+                <span *ngIf="signupForm.get('email').invalid && signupForm.get('email').touched" class="help-block">
+                    <span *ngIf="signupForm.get('email').errors.email"  class="text-danger">Must be an email!</span>
+                    <span *ngIf="signupForm.get('email').errors.required"  class="text-danger">Email is required!</span>
+                </span>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input formControlName="password" type="password" id="password" class="form-control">
+                <span *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched" class="help-block">
+                    <span *ngIf="signupForm.get('password').errors.pattern"  class="text-danger">Password should be: <br>More than 9 characters <br>Have at least 1 uppercase <br>Have at least 1 number<br>Have at least 1 lowercase</span>
+                    <span *ngIf="signupForm.get('password').errors.required"  class="text-danger">Password is required!</span>
+                </span>
+            </div>
+            <div class="div">
+                <button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Sign Up</button>
+            /
+            <a (click)="goToLogin()">Already have an account?</a>
+            </div>
+        </form>
+        <div class="spinner">
+            <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+        </div>
+    </div>
+</div>
