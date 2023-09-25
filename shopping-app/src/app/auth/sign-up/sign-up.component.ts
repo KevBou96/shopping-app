@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { catchError } from 'rxjs';
+import { catchError, last } from 'rxjs';
+import { UserService } from 'src/app/shared/services/user.service';
+import { User, IUser } from '../user.model';
 
 
 @Component({
@@ -17,7 +19,7 @@ export class SignUpComponent implements OnInit {
   isLoading = false;
   error: string = null;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router, private userService: UserService) {}
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
@@ -32,8 +34,19 @@ export class SignUpComponent implements OnInit {
     this.isLoading = true;
     let email: string = this.signupForm.value.email;
     let password: string = this.signupForm.value.password;
+    let name: string = this.signupForm.value.name;
+    let lastName: string = this.signupForm.value.lastname;
     this.auth.signup(email, password)
     .subscribe(responseData => {
+      console.log(responseData)
+      const newUser: IUser = {
+        name: name, 
+        lastName: lastName, 
+        email: email,
+        id: responseData.localId,
+        emailVerified: false
+      }
+      this.userService.addUserToDatabase(newUser)
       this.auth.sendEmailVerification(responseData.idToken)
       .subscribe(response => {
         console.log(response)

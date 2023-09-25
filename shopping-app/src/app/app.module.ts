@@ -6,6 +6,9 @@ import { HeaderComponent } from './header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core.module';
+import { AngularFireModule} from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire//compat/firestore'
+import { environment } from 'src/environments/environment.development';
 
 
 @NgModule({
@@ -18,9 +21,13 @@ import { CoreModule } from './core.module';
     AppRoutingModule,
     HttpClientModule,
     SharedModule,
-    CoreModule
+    CoreModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule.enablePersistence()
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  
+ }

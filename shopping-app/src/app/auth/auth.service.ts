@@ -5,6 +5,7 @@ import { User } from "./user.model";
 import { Router } from "@angular/router";
 import { environment } from "src/environments/environment.development"; 
 import { response } from "express";
+import { UserService } from "../shared/services/user.service";
 
 interface AuthResponseData {
     idToken: string,
@@ -20,7 +21,7 @@ export class AuthService {
     user = new BehaviorSubject<User>(null);
     tokenExpirationTimer = null;
 
-    constructor(private http: HttpClient, private router: Router) {}
+    constructor(private http: HttpClient, private router: Router, private userService: UserService) {}
 
     signup(email: string, password: string) {
         return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.fireBaseApiKey
@@ -63,6 +64,7 @@ export class AuthService {
             return throwError(errorMessage);
         }), tap(responseData => {
             if (responseData.users[0].emailVerified) {
+                this.userService.verifyUser(responseData.users[0].localId)
                 this.handleAuth(authData.email, authData.localId, authData.idToken, +authData.expiresIn);
             } else {
                 return 
