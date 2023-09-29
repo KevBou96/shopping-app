@@ -25,8 +25,4 @@ export class UserService {
             verified: true
         })
     }
-
-    getUserData() {
-        console.log("userdata")
-    }
-} 
+}
