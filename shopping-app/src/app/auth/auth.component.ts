@@ -53,10 +53,10 @@ export class AuthComponent implements OnInit {
     }
 
     signUp() {
-        this.router.navigate(['signup'])
+        this.router.navigate(['user/signup'])
     }
 
     forgotPassword() {
-        this.router.navigate(['/login/forgot-password'])
+        this.router.navigate(['/user/forgot-password'])
     }
 }

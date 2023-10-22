@@ -9,16 +9,15 @@
                 <li routerLinkActive="active"><a routerLink="/shopping-list">Shopping List</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li *ngIf="!user" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/login">Log In</a></li>
-                <li *ngIf="!user" routerLinkActive="active"><a routerLink="/login/signup">Sign up</a></li>
+                <li *ngIf="!user" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/user">Log In</a></li>
+                <li *ngIf="!user" routerLinkActive="active"><a routerLink="/user/signup">Sign up</a></li>
             </ul>
             <ul *ngIf="user" class="nav navbar-nav navbar-right">
-                <li *ngIf="user" routerLinkActive="active"><a routerLink="/login" (click)="logOut()">Log Out</a></li>
                 <li class="dropdown" appDropdown>
-                    <a style="cursor: pointer"class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
+                    <a style="cursor: pointer"class="dropdown-toggle" role="button">Manage<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a style="cursor: pointer" (click)="saveData()">Save Data</a></li>
-                        <li><a style="cursor: pointer" (click)="fetchData()">Fetch Data</a></li>
+                        <li *ngIf="user"><a routerLink="/user/profile">Profile</a></li>
+                        <li *ngIf="user"><a routerLink="/user" (click)="logOut()">Log Out</a></li>
                     </ul>
                 </li>
             </ul>

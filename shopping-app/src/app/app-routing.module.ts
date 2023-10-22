@@ -5,11 +5,11 @@ import { SharedModule } from './shared/shared.module';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/user', pathMatch: 'full' },
   { path: 'recipes', loadChildren: () => import('./recipes/recipe.module').then((mod) =>
   mod.RecipesModule) },
   { path: 'shopping-list', loadChildren: () => import('./shopping-list/shopping-list.module').then(mod => mod.ShoppingListModule)},
-  { path: 'login', loadChildren: () => import('./auth/auth.module').then(mod => mod.AuthModule)}
+  { path: 'user', loadChildren: () => import('./auth/auth.module').then(mod => mod.AuthModule)}
 ];
 
 @NgModule({

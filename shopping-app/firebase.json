@@ -1,6 +1,10 @@
 {
+  "firestore": {
+    "rules": "firebase.rules",
+    "indexes": "firestore.indexes.json"
+  },
   "hosting": {
-    "public": "dist/shopping-app",
+    "public": "dist/shopping-app/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -12,9 +16,5 @@
         "destination": "/index.html"
       }
     ]
-  },
-  "firestore": {
-    "rules": "firebase.rules",
-    "indexes": "firestore.indexes.json"
   }
 }

@@ -38,7 +38,7 @@ export class ForgotPasswordComponent implements OnInit {
     }
 
     goToLogin() {
-      this.router.navigate(['/login'])
+      this.router.navigate(['/user'])
     }
 
     onHandleError() {

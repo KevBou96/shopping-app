@@ -6,12 +6,15 @@ import { RouterModule } from "@angular/router";
 import { SharedModule } from "../shared/shared.module";
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { SignUpComponent } from "./sign-up/sign-up.component";
+import { ProfileComponent } from './profile/profile.component';
+import { AuthGuard } from "./auth.guard";
 
 @NgModule({
     declarations: [
         AuthComponent,
         ForgotPasswordComponent,
-        SignUpComponent
+        SignUpComponent,
+        ProfileComponent
     ],
     imports: [
         CommonModule,
@@ -19,6 +22,7 @@ import { SignUpComponent } from "./sign-up/sign-up.component";
         RouterModule.forChild([{ path: '', component: AuthComponent},
         { path: 'forgot-password', component: ForgotPasswordComponent},
         { path: 'signup', component: SignUpComponent},
+        { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]}
         ]),
         SharedModule
     ]

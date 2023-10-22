@@ -62,7 +62,7 @@ export class SignUpComponent implements OnInit {
   }
 
   goToLogin() {
-    this.router.navigate(['/login'])
+    this.router.navigate(['/user'])
   }
 
   onHandleError() {

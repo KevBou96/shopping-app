@@ -9,6 +9,9 @@ import { CoreModule } from './core.module';
 import { AngularFireModule} from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire//compat/firestore'
 import { environment } from 'src/environments/environment.development';
+import { StoreModule } from '@ngrx/store';
+import { shoppingListReducer } from './shopping-list/shopping-list-store/shopping-list-reduces';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -22,8 +25,12 @@ import { environment } from 'src/environments/environment.development';
     HttpClientModule,
     SharedModule,
     CoreModule,
+    StoreModule.forRoot({
+      shoppingList: shoppingListReducer
+    }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule.enablePersistence()
+    AngularFirestoreModule.enablePersistence(),
+    NoopAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
